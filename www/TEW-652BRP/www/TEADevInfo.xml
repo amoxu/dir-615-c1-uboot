@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<teapi>
+<gateway>
+<subtype>GatewayWithWiFi</subtype>
+<friendly_name>TRENDnet Wireless N Home Router</friendly_name>
+<vendor_name>TRENDnet</vendor_name>
+<vendor_url>http://www.trendnet.com</vendor_url>
+<model_description>Wireless N Home Router</model_description>
+<model_name>TEW-652BRP</model_name>
+<extensions>
+<task name="Wireless settings" action="/wireless_basic.asp" />
+<task name="Block network access" action="/filters.asp" />
+<task name="Parental controls" action="/domain_filter.asp" />
+<task name="TRENDnet Tech Support" action="http://www.trendnet.com" />
+<task name="Reboot router" action="/restart.cgi" />
+</extensions>
+</gateway>
+</teapi>

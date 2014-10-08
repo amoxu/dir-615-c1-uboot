@@ -1,0 +1,25 @@
+
+export ENETDIR=$(TOPDIR)/linux/drivers/net/ag7100/
+
+#
+# This is the specific makefile for the pb42 board.  It has dependancies for both
+# the "common" build and the "jffs2" build.  This is unique for each board type, and
+# must be configured for each board.
+#
+
+ap81_build: common_build madwifi_build $(BUILD_TYPE)_build
+
+common_build: check_tftp rootfs_prep toolchain_build uimage \
+		kernel_info enet_build busybox_build hostapd wpa_supplicant sar
+
+#
+# Unique rules for the ag7100 PHY with the ar7100 (Hydra)  board
+#
+
+enet_build: kernel_build
+	cd $(ENETDIR) && rm -f *.o *.ko *.mod.*
+	$(MAKEARCH) -C $(KERNELPATH) SUBDIRS=$(ENETDIR) modules
+	test -d $(MODULEPATH) || mkdir -p $(MODULEPATH)
+	cp $(ENETDIR)/ag7100_mod.ko $(MODULEPATH)
+
+

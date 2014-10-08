@@ -1,0 +1,87 @@
+#!/bin/sh
+## The form of the command is
+## Release_CD <RELEASE_CD_PATH> <MODEL_NAME> <PLATFORM_NAME> <PHASE> 
+## Where
+##     RELEASE_CD_PATH = /home/825WW_ReleaseCD
+##     MODEL_NAME = DIR-825WW_B1
+##	   PLATFORM_NAME = AR7161
+##	   PHASE = 1 => for Release CD
+##			   2 => for GPL Source Code
+###################################################################
+
+if [ "${1}" = "" -o "${4}" = "" ]; then
+    echo "Rlease_CD <RELEASE_CD_PATH> <MODEL_NAME> <PLATFORM_NAME> <PHASE>"
+    echo "ex. RELEASE_CD_PATH = /home/825WW_ReleaseCD"
+    echo "    MODEL_NAME = DIR-825WW_B1              "
+	echo "    PLATFORM_NAME = AR7161                 "
+	echo "    PHASE = 1 => for Release CD            "
+	echo "            2 => for GPL Source Code       "
+    exit
+fi
+
+RELEASE_CD_PATH=$1
+MODEL_NAME=$2
+PLATFORM=$3
+PHASE=$4
+
+if [ "$4" == "1" ]; then
+
+######## Create Release CD folder################
+mkdir -p $RELEASE_CD_PATH || exit 1
+mkdir -p $RELEASE_CD_PATH/Firmware-Test_Porgram_Driver
+mkdir -p $RELEASE_CD_PATH/GPL_Source_Code
+mkdir -p $RELEASE_CD_PATH/GPL_Source_Code/GPL
+mkdir -p $RELEASE_CD_PATH/GPL_Source_Code/src
+mkdir -p $RELEASE_CD_PATH/GPL_Source_Code/toolchain
+mkdir -p $RELEASE_CD_PATH/Release_Note
+mkdir -p $RELEASE_CD_PATH/Test_Report
+mkdir -p $RELEASE_CD_PATH/Source_Code
+mkdir -p $RELEASE_CD_PATH/Source_Code/toolchain
+mkdir -p $RELEASE_CD_PATH/Source_Code/src
+
+######## GPL Makefile, Doc exist ??##############
+./GPL_Makefile_Check /home/AthSDK $MODEL_NAME $RELEASE_CD_PATH
+
+if [ $? != 0 ]; then
+	echo "!!! GPL_Makefile_Check Fail !!!"
+	rm -rf $RELEASE_CD_PATH
+	exit 255
+fi
+
+########Save Source Code and toolchain################
+cd /home
+tar -jcvf $RELEASE_CD_PATH/Source_Code/src/$MODEL_NAME-SRC.tgz AthSDK || exit 1
+
+if [ "$PLATFORM" == "AR7161" -o "$PLATFORM" == "AR9100" ] && [ -f /opt/ATH/ap71.tgz ]; then
+	cp /opt/ATH/ap71.tgz $RELEASE_CD_PATH/Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+	cp /opt/ATH/ap71.tgz $RELEASE_CD_PATH/GPL_Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+else
+	if [ "$PLATFORM" == "AthSDK_AP61" ] && [ -f /opt/ATH/atheros_tool.tgz ]; then
+		cp /opt/ATH/atheros_tool.tgz $RELEASE_CD_PATH/Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+		cp /opt/ATH/atheros_tool.tgz $RELEASE_CD_PATH/GPL_Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+	else
+		if [ "$PLATFORM" == "2.6.31" ] && [ -f /opt/ATH/ath_mips_gcc-4.3.3.tar.bz2 ]; then
+			cp /opt/ATH/ath_mips_gcc-4.3.3.tar.bz2 $RELEASE_CD_PATH/Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+			cp /opt/ATH/ath_mips_gcc-4.3.3.tar.bz2 $RELEASE_CD_PATH/GPL_Source_Code/toolchain/$MODEL_NAME-toolchain.tgz
+		else
+		echo "Save Toolchain Fail !!!"
+			exit 255;
+		fi	
+	fi
+fi
+
+###############################################
+echo "Run Release_CD phase 1 successfully !!!"
+echo "Please make AthSDK by normal procedure !!!" 
+
+####### PHASE 2 ################################################################################################################
+else
+
+######## Save GPL Source Code################
+cd /home
+cp /home/AthSDK/*.log $RELEASE_CD_PATH/GPL_Source_Code/src || exit 1
+tar -jcvf $RELEASE_CD_PATH/GPL_Source_Code/src/$MODEL_NAME-GPL.tgz AthSDK || exit 1
+
+echo "Congratulation !!! You Finish Release GPL Source Code SOP !!!"
+
+fi

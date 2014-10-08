@@ -1,0 +1,108 @@
+menu CMO_UI_FLAG
+	depends on CONFIG_WWW
+
+	choice 
+		prompt "Wireless Page Support or not"
+		default CONFIG_WWW_WIRELESS_SUPPORT
+		help
+			Decide wireless support or not
+
+	config CONFIG_WWW_WIRELESS_SUPPORT
+		bool "HTML GUI WIRELESS ENABLE"
+		help
+			Support enable Wireless Function
+
+	config CONFIG_WWW_WIRELESS_NOT_SUPPORT
+		bool "HTML GUI WIRELESS DISABLE"
+		help
+			Support disable Wireless Function
+	endchoice
+
+	config CONFIG_WWW_BRIDGE_MODE
+		bool "HTML GUI BRIDGE MODE"
+		default n
+		depends on CONFIG_WWW
+		help
+		Support Bridge mode on GUI.
+	
+	config CONFIG_WWW_OPENDNS
+		bool "HTML GUI OPENDNS"
+		default n
+		depends on CONFIG_WWW
+		help
+		Support OPENDNS setting on GUI.
+
+	config CONFIG_WWW_WLAN_SCHEDULE
+		bool "HTML GUI WLAN SCHEDULE"
+		default n
+		depends on CONFIG_WWW
+		help
+		Support enable/disable WLAN on schedule.
+
+	choice
+		prompt "Select MAC Filter Type"
+		default CONFIG_WWW_ADVANCED_MAC_FILTER
+		depends on CONFIG_WWW
+		help
+		Support MAC Filter(include LAN/WLAN) or WLAN MAC Filter on GUI.
+	config CONFIG_WWW_ADVANCED_MAC_FILTER
+		bool "HTML GUI MAC FILTER (WEBFILTER) PAGE"
+		help
+		support MAC FILTER related pages in www or not.
+
+    config CONFIG_WWW_ADVANCED_WLAN_MAC_FILTER
+		bool "HTML GUI WLAN MAC FILTER PAGE"
+		help
+		support WLAN MAC FILTER related pages in www or not.
+
+	endchoice
+
+	config CONFIG_WWW_ADVANCED_IPV6
+		bool "HTML GUI IPv6 PAGES"
+		default y
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "IPV6_SUPPORT" of ipv6 related pages in www or not.
+
+	config CONFIG_WWW_ADVANCED_WISH
+		bool "HTML GUI WISH PAGES"
+		default n
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "CONFIG_WISH" of WISH related pages in www or not.
+
+	config CONFIG_WWW_ADVANCED_QOS
+		bool "HTML GUI QoS PAGES"
+		default y
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "CONFIG_QOS" of QoS related pages in www or not.
+
+	config CONFIG_WWW_STATIC_ROUTING
+		bool "HTML GUI Static Routing PAGES"
+		default n
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "STATIC_ROUTING" of routing related pages in www or not.
+
+	config CONFIG_WWW_IPV6_TEST
+		bool "HTML GUI IPv6 Logo Test PAGES"
+		default n
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "IPv6_TEST" of ipv6 related pages in www or not.
+
+	config CONFIG_WWW_SNMP
+		bool "HTML GUI SNMP PAGES"
+		default n
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "SNMP_SUPPORT" of ipv6 related pages in www or not.	
+
+	config CONFIG_WWW_VLAN_8021Q
+		bool "HTML GUI VLAN 802.1Q PAGES"
+		default n
+		depends on CONFIG_WWW
+		help
+		Install the defined CMO_UI_FLAG "VLAN_8021Q" of vlan 802.1q related pages in www or not.
+endmenu

@@ -1,0 +1,80 @@
+#
+# For a description of the syntax of this configuration file,
+# see Kconfig-language.txt
+#
+
+mainmenu "Environment Configuration"
+
+menu "Model Setting"
+		config CONFIG_MODEL_NAME
+		string "Model Name"
+		default "DWL-2200"
+		help
+		Model name
+
+config HARDWARE_ID
+		string "Hardware ID"
+		default "AP52-AR2316-RT-060913-00"
+		help
+		hardware id
+endmenu
+
+menu "Workspace Environment"
+
+config PLATFORM
+		 string "Platform architecture"
+		 default "AthSDK_AP61"
+       help
+       Specify the target architecture. Support 
+		 1. BCM5352
+		 2. MVL5181
+		 
+config AP_TYPE
+		string "atheros chip type"
+		default "ap61"
+		 		 
+       help
+       Specify the target architecture. Support 
+		 1. ap61
+		 2. ap51
+config WL_PLATFORM
+		 string "Wireless architecture"
+		 default "None"
+		 help
+		 Specify the wireless architecture. Support
+
+config ENV_PATH
+		 string "Current workspace path"
+		 default "/home/AthSDK_AP61
+		 
+config TOOLCHAIN_PATH
+		 string "Current workspace path"
+		 default "/home/AthSDK_AP61
+
+config APPS_CROSS
+		 string "APPS Cross compiler prefix"
+		 default "mips-linux-"
+
+config KRL_CROSS
+		 string "Kernel Cross compiler prefix"
+		 default "mips-linux-"
+
+config WL_CROSS
+		 string "Wireless Cross compiler prefix"
+		 default "mips-linux-"
+									 
+config APPS_CFLAG
+		 string "APPS CFLAG"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+
+config KRL_CFLAG
+		 string "Kernel CFLAG"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+
+config WL_CFLAG
+		 string "Wireless CFLAG"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+
+endmenu
+
+

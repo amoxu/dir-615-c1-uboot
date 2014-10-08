@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>backup loader</title>
+<script language="javascript">
+var count = 0;	
+function count_down(){
+if (count==101) {get_by_id("success").style.display="";get_by_id("upgrade").style.display="none";return;}
+get_by_id("show_sec").innerHTML = count;
+if (count<101) {count++;setTimeout('count_down()', 1100);}
+}
+function get_by_id(id){with(document){return getElementById(id);}}
+</script>
+</head>
+<center>
+<p><font color=blue face=arial size=5><b>D-LINK Router Recovery Mode</font></b></p>
+<br><br>
+<span id=upgrade><font face=verdana size=3>Device is upgrading the firmware ....<span id="show_sec"></span>&nbsp;&#37;</font></span>
+<span id=success style="display:none"><font color=red face=verdana size=4><b>Upgrade successfully!</b></font></span>
+<br><br><br><br>
+<hr>
+<ul><p><font face=Verdana color=red size=4><strong>WARNING!!</strong></font></p></ul>
+</center>           
+<font face=Verdana size=1><li>Do not interrupt the upgrade process, as it may damage the device.
+<hr>
+<script>
+count_down();
+</script>
+</html>

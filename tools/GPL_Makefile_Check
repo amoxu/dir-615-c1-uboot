@@ -1,0 +1,62 @@
+#!/bin/sh
+## The Script will do the some Makefile or Doc existence checking
+##  1.AthSDK/GPL_Makefile
+##  2.AthSDK/apps/AppsGPL_Makefile
+##  3.AthSDK/apps/httpd/HttpdGPL_Makefile
+##  4.AthSDK/platform/PlatformGPL_Makefile
+##  5.AthSDK/www/model/GPL_Doc
+##
+## The form of the command is
+## GPL_Makefile_Check <ATHSDK_PATH> <MODEL_NAME> <RELEASE_CD_PATH>
+## Where
+##     ATHSDK_PATH: /home/AthSDK
+##     MODEL_NAME: DIR-825EU_B1
+##     RELEASE_CD_PATH: /home/825WW_ReleaseCD
+###################################################################
+
+if [ "${1}" = "" -o "${3}" = "" ]; then
+    echo "GPL_Makefile_Check <ATHSDK_PATH> <MODEL_NAME> <RELEASE_CD_PATH>"
+    echo "ex, <ATHSDK_PATH> = /home/AthSDK"
+    echo "ex, <MODEL_NAME> = DIR-825EU_B1"
+    echo "ex. <RELEASE_CD_PATH> = /home/825EU_ReleaseCD"
+    exit 1
+fi
+
+ATHSDK_PATH=$1
+MODEL_NAME=$2
+RELEASE_CD_PATH=$3
+
+if [ ! -f $ATHSDK_PATH/GPL_Makefile ]; then
+    echo $ATHSDK_PATH/GPL_Makefile No Exist !!!
+    exit 1
+fi
+
+if [ ! -f $ATHSDK_PATH/apps/AppsGPL_Makefile ]; then
+    echo $ATHSDK_PATH/apps/AppsGPL_Makefile No Exist !!!
+    exit 1
+fi
+
+if [ ! -f $ATHSDK_PATH/apps/httpd/HttpdGPL_Makefile ]; then
+    echo $ATHSDK_PATH/apps/httpd/HttpdGPL_Makefile No Exist !!!
+    exit 1
+fi
+
+if [ ! -f $ATHSDK_PATH/platform/PlatformGPL_Makefile ]; then
+    echo $ATHSDK_PATH/platform/PlatformGPL_Makefile No Exist !!!
+    exit 1
+fi
+
+##########################################################################
+#Prepare GPL_Doc for <RELEASE_CD_PATH>/GPL_Source_Code/GPL, 
+#If there are not GPL_Doc/ in www/model 
+#	1. Manually copy GPL_Doc to www/model and 
+#	2. check model name in GPL_Doc/
+#		("D-Link GPL Written Offer", "firmware_description" and "README")
+##########################################################################
+if [ ! -d $ATHSDK_PATH/www/$MODEL_NAME/GPL_Doc ]; then
+    echo $ATHSDK_PATH/www/$MODEL_NAME/GPL_Doc No Exist !!!
+    exit 1
+else
+	cp -raf $ATHSDK_PATH/www/$MODEL_NAME/GPL_Doc/* $RELEASE_CD_PATH/GPL_Source_Code/GPL
+	rm -rf $RELEASE_CD_PATH/GPL_Source_Code/GPL/CVS
+fi

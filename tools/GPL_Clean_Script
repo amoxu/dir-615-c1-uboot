@@ -1,0 +1,177 @@
+#!/bin/sh
+## The form of the command is
+## GPL_Clean_Scipt <PLATFORM_NAME> <WIRELESS_NAME> <MODEL_NAME>
+## Where
+##     PLATFORM_NAME:   AR7161
+##     WIRELESS_NAME:   AP94
+##     MODEL_NAME: DIR-825EU_B1
+###################################################################
+
+if [ "${1}" = "" -o "${3}" = "" ]; then
+    echo "GPL_Clean_Scipt <PLATFORM> <WIRELESS> <MODEL_NAME>"
+    echo "ex, <PLATFORM_NAME> = AR7161"
+    echo "ex, <WIRELESS_NAME> = AP94"
+    echo "ex, <MODEL_NAME> = DIR-825EU_B1"
+    exit
+fi
+
+########Environment Setting#####################
+ATHSDK_PATH="/home/AthSDK"
+PLATFORM_PATH=${ATHSDK_PATH}/platform/$1
+WIERLESS_PATH=${ATHSDK_PATH}/wireless/$2
+WWW_PATH=${ATHSDK_PATH}/www/$3
+APPS_PATH=${ATHSDK_PATH}/apps
+
+########Save(Re-tar) RootFS#####################
+cd $ATHSDK_PATH/rootfs
+if [ "$1" == "AR7161" -a "$2" == "AP81" ] && [ -d target ]; then
+	rm -rf $PLATFORM_PATH/rootfs_ap81.tar.bz2
+	tar -jcvf $PLATFORM_PATH/rootfs_ap81.tar.bz2 target || exit 1
+else
+if [ "$1" == "AR7161" -a "$2" == "AP83" ] && [ -d target ]; then
+	rm -rf $PLATFORM_PATH/rootfs_ap83.tar.bz2
+	tar -jcvf $PLATFORM_PATH/rootfs_ap83.tar.bz2 target || exit 1
+else
+if [ "$1" == "AR7161" -a "$2" == "AP91" ] && [ -d target ]; then
+	rm -rf $PLATFORM_PATH/rootfs_ap91.tar.bz2
+	tar -jcvf $PLATFORM_PATH/rootfs_ap91.tar.bz2 target || exit 1
+else
+if [ "$1" == "AR7161" -a "$2" == "AP98" ] && [ -d target ]; then
+	rm -rf $PLATFORM_PATH/rootfs_ap98.tar.bz2
+	tar -jcvf $PLATFORM_PATH/rootfs_ap98.tar.bz2 target || exit 1
+else
+if [ "$1" == "AR7161" -a "$2" == "AP94" ] && [ -d target ]; then
+	rm -rf $PLATFORM_PATH/rootfs_ap94.tar.bz2
+	tar -jcvf $PLATFORM_PATH/rootfs_ap94.tar.bz2 target || exit 1
+else
+if [ "$1" == "AR9100" ] && [ -d target ]; then
+        rm -rf $PLATFORM_PATH/rootfs_ap81.tar.bz2
+        tar -jcvf $PLATFORM_PATH/rootfs_ap81.tar.bz2 target || exit 1
+else
+if [ "$1" == "MV88F6281" ] && [ -d target ]; then
+        rm -rf $PLATFORM_PATH/rootfs_mv_ap95.tar.bz2 # GLIBC
+        rm -rf $PLATFORM_PATH/rootfs_mv_ap95-uClibc.tar.bz2 # UCLIBC
+        tar -jcvf $PLATFORM_PATH/rootfs_mv_ap95.tar.bz2 target || exit 1
+else
+if [ "$1" == "2.6.31" ] && [ -d target ]; then
+        rm -rf $PLATFORM_PATH/rootfs_db12x
+		find -name CVS -exec rm -rf {} ';'
+        tar -jcvf $PLATFORM_PATH/rootfs_db120.tar.bz2 target || exit 1
+else
+		echo "!!! PLATFORM Error !!!"
+        echo "!!! Only permit to run GPL_Clean_Script once !!!"
+        exit 1;
+fi
+fi
+fi
+fi
+fi
+fi
+fi
+fi
+
+#=======================optional remove==================================
+#Remove non-use Apps (compare apps\Makefile and apps\.config)
+#rm -rf $APPS_PATH/freeradius-client-1.1.6/ openldap-2.4.11/ gmp-4.2.2/
+#rm -rf $APPS_PATH/openswan-2.6.16/ openssl-0.9.8h/ openvpn-2.1_rc9/ busybox-1.6.1/
+#rm -rf $APPS_PATH/libpcap-0.9.8/ pcre-7.7/ snort-2.8.2.2/ ppp-2.4.4/ mldc
+#rm -rf $APPS_PATH/bridge-utils/ busybox-1.00-pre10/ bpalogin/
+#rm -rf $APPS_PATH/accel-pptp-0.8.2/ pptpd-1.3.4/ dhcp-forwarder-0.7/ dhcpv6/ dnsmasq/
+#rm -rf $APPS_PATH/dropbear/ hostapd/ inadyn/ iptables/ libupnp-1.6.3/
+#rm -rf $APPS_PATH/llmnr/ mrd/ pptp/ snmp/ uuid/ zebra/ zlib/
+
+########Remove full-private Apps#################
+cd  ${APPS_PATH}
+rm -rf cgi/ cmds/ DCC/ doc/ fw_query/ timer/ ip_lookup/ tftpd/ wcn/ mbandwidth/
+rm -rf Mail-On-Schedule/ tracegw/ miniupnpd-1.0-RC7/ oray/ owera/
+rm -rf heartbeat/ miniupnpd-1.3/ wpa_supplicant/ header/ nat_cfg/ upnpd_ath/
+rm -rf wps_ath/ gpio/ rc/
+rm -rf Agent5.0/ openagent-2.0/
+
+########Remove half-private Apps#################
+cd  ${APPS_PATH}
+rm -rf libplatform/*.c
+rm -rf libplatform/bsp.h
+rm -rf nvram/*.c
+rm -rf sutil/*.c
+rm -rf artblock/*.c
+rm -rf linux_nvram/*.c
+find intellon/ -name *.c |xargs rm -rf
+
+cd ${APPS_PATH}/httpd
+rm -rf *.h
+rm -rf ej.c file.c firmware.c ajax.c authgraph.c basic.c cgi.c cmobasicapi.c core.c
+rm -rf md5.c platform.c pure.c pure_xml.c widget.c httpd.c httpd_util.c log.c
+#!!! Do Not Delete !!! /home/AthSDK/apps/httpd/libhttpd.a customer.c
+
+########Remove wireless driver################
+rm -rf $WIERLESS_PATH/
+
+########Remove Platform driver################
+########We have to release boot loader source code#########
+
+cd $PLATFORM_PATH
+rm -rf doc/  drivers/
+
+########Remove useless file################
+cd $ATHSDK_PATH
+rm -rf www/model_list www/Test-Page/ doc/
+
+########Remove WWW file################
+cd $WWW_PATH
+rm -rf *.txt nvram.default 
+if [ -n "$3" ]; then
+	if [ "$3" == "TEW-673GRU" ]; then 
+		if [ -d "TEW-673GRU_Pic_Code" ]; then
+			rm -rf TEW-673GRU_Pic_Code;
+		fi
+	fi
+fi
+
+
+#Do not delete www/ by Eric 20090715
+#Do not delete bsp.h by Ken 20090715
+#Do not delete defaultConf.h by Jimmy 20100827, building loader needs that file
+
+rm -rf config/ GPL_Doc/ Test-Page/ AutoRun_CD/ Sorenson-Admin-password_utility/
+
+########Copy GPL Makefile to Normal Makefile################
+cp $ATHSDK_PATH/GPL_Makefile $ATHSDK_PATH/Makefile || exit 1
+cp $ATHSDK_PATH/platform/PlatformGPL_Makefile $ATHSDK_PATH/platform/Makefile || exit 1
+cp $APPS_PATH/AppsGPL_Makefile $APPS_PATH/Makefile || exit 1
+cp $APPS_PATH/httpd/HttpdGPL_Makefile $APPS_PATH/httpd/Makefile || exit 1
+
+########Return to /home/AthSDK to check make process########
+cd $ATHSDK_PATH
+make clean || exit 1
+
+echo "Start to make GPL Source Code...Please Wait..."
+if ! make > makelog.log 2>&1
+then
+	echo "!!!!!! make GPL  Fail !!!!!!"
+	exit 1
+fi
+
+echo "Start to make boot loader...Please Wait..."
+if ! make loader > makeloader.log 2>&1
+then
+	echo "!!!!!! make boot loader Fail !!!!!!"
+	exit 1
+fi
+
+echo "Start to make clean...Please Wait"
+if ! make clean > makeclean.log 2>&1
+then
+	 echo "!!!!!! make clean GPL Code Fail !!!!!!"
+	 exit 1
+fi
+
+
+########Remove CVS folder ################
+cd $ATHSDK_PATH
+find -name CVS -exec rm -rf {} ';'
+
+echo "======================================================="
+echo " Generate GPL Source Code and makelog.log Finished !!!"
+echo " Please run Release_CD phase 2 !!! "
+echo "======================================================="
