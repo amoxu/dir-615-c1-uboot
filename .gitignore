@@ -1,3 +1,14 @@
+/platform/AR7161/u-boot/board/ar9100/ap81/libap81.a
+/platform/AR7161/u-boot/common/libcommon.a
+/platform/AR7161/u-boot/cpu/mips/ar9100/libar7100.a
+/platform/AR7161/u-boot/cpu/mips/libmips.a
+/platform/AR7161/u-boot/drivers/libdrivers.a
+/platform/AR7161/u-boot/httpd/libhttpd.a
+/platform/AR7161/u-boot/lib_generic/libgeneric.a
+/platform/AR7161/u-boot/lib_mips/libmips.a
+/platform/AR7161/u-boot/net/libnet.a
+/platform/AR7161/u-boot/post/cpu/libcpu.a
+/platform/AR7161/u-boot/post/libpost.a
 /platform/AR7161/u-boot/System.map
 /platform/AR7161/u-boot/common/*.o
 /platform/AR7161/u-boot/include/config.h
