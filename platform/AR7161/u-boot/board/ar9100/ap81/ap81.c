@@ -7,13 +7,13 @@
 #include "ar7100_soc.h"
 //#include "../../../httpd/bsp.h"
 
-/* 
- 	Date: 2009-2-13 
+/*
+ 	Date: 2009-2-13
  	Name: Ken_Chiang
  	Reason: added for used usb.
  	Notice :
-*/ 
-#define USED_USB 1
+*/
+#define USED_USB
 #ifdef USED_USB
 void
 ar7100_usb_initial_config(void)
@@ -135,15 +135,15 @@ ar7100_mem_config()
     /* Temp addition - check with Ravi */
     *(volatile unsigned int *)0xb8080008 = 0x00000040;
     udelay(100);
-/* 
- 	Date: 2009-2-13 
+/*
+ 	Date: 2009-2-13
  	Name: Ken_Chiang
  	Reason: added for used usb.
  	Notice :
-*/     
+*/
 #ifdef USED_USB
     ar7100_usb_initial_config();
-#endif// USED_USB    
+#endif// USED_USB
     return (ar7100_ddr_find_size());
 }
 
@@ -157,10 +157,10 @@ int checkboard (void)
 {
 
     printf("AP81 (ar9100) U-boot (build by Amo Xu<amo.xoo@live.cn>)\n");
-#ifdef DLINK_ROUTER_LED_DEFINE   
-	printf("DLINK_ROUTER_LED_DEFINE\n");    
-    *(volatile int *)(0xb8040000) |=((1 << DIAGNOSTIC_LED) | (1<<14));//init       
+#ifdef DLINK_ROUTER_LED_DEFINE
+	printf("DLINK_ROUTER_LED_DEFINE\n");
+    *(volatile int *)(0xb8040000) |=((1 << DIAGNOSTIC_LED) | (1<<14));//init
     *(volatile int *)(0xb8040008) &=~(1<<DIAGNOSTIC_LED);//light on
-#endif     
+#endif
 	return 0;
 }

@@ -1,5 +1,12 @@
 include .config
 
+WORKING_DIR	:= $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+export	WORKING_DIR
+
+
+ENV_PATH=$(WORKING_DIR)
+TOOLCHAIN_PATH=$(WORKING_DIR)/toolchain-mips32k
+
 ifeq ($(ENV_PATH),)
 $(error "please specify ENV_PATH in .config")
 endif

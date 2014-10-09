@@ -8,13 +8,13 @@ mainmenu "Environment Configuration"
 menu "Model Setting"
 		config CONFIG_MODEL_NAME
 		string "Model Name"
-		default "DWL-2200"
+		default "DIR-615_C1"
 		help
 		Model name
 
 config HARDWARE_ID
 		string "Hardware ID"
-		default "AP52-AR2316-RT-060913-00"
+		default "AP81-AR9130-RT-070614-02"
 		help
 		hardware id
 endmenu
@@ -23,33 +23,25 @@ menu "Workspace Environment"
 
 config PLATFORM
 		 string "Platform architecture"
-		 default "AthSDK_AP61"
+		 default "AR9100"
        help
-       Specify the target architecture. Support 
-		 1. BCM5352
-		 2. MVL5181
+       Specify the target architecture
 		 
 config AP_TYPE
 		string "atheros chip type"
-		default "ap61"
-		 		 
-       help
-       Specify the target architecture. Support 
-		 1. ap61
-		 2. ap51
+		default "AP81"
+       
 config WL_PLATFORM
 		 string "Wireless architecture"
-		 default "None"
-		 help
-		 Specify the wireless architecture. Support
+		 default "AP81"
 
 config ENV_PATH
 		 string "Current workspace path"
-		 default "/home/AthSDK_AP61
+		 default "/home/AthSDK
 		 
 config TOOLCHAIN_PATH
 		 string "Current toolchain path"
-		 default "/home/AthSDK_AP61/toolchain-mips32k
+		 default "/home/AthSDK/toolchain-mips32k
 
 config APPS_CROSS
 		 string "APPS Cross compiler prefix"
@@ -65,15 +57,15 @@ config WL_CROSS
 									 
 config APPS_CFLAG
 		 string "APPS CFLAG"
-		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2 -DCONFIG_VLAN_ROUTER -DKERNEL_2_6_15 -DATHEROS_11N_DRIVER -DAR9100 "
 
 config KRL_CFLAG
 		 string "Kernel CFLAG"
-		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2 -DCONFIG_VLAN_ROUTER"
 
 config WL_CFLAG
 		 string "Wireless CFLAG"
-		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2"
+		 default "-s -Wall -Wstrict-prototypes -Wshadow -Os -fstrict-aliasing -fomit-frame-pointer -O2 -DCONFIG_VLAN_ROUTER"
 
 endmenu
 
