@@ -48,8 +48,8 @@ config ENV_PATH
 		 default "/home/AthSDK_AP61
 		 
 config TOOLCHAIN_PATH
-		 string "Current workspace path"
-		 default "/home/AthSDK_AP61
+		 string "Current toolchain path"
+		 default "/home/AthSDK_AP61/toolchain-mips32k
 
 config APPS_CROSS
 		 string "APPS Cross compiler prefix"
