@@ -97,7 +97,7 @@
 #define  CFG_ENV_IS_NOWHERE
 
 /* Address and size of Primary Environment Sector	*/
-#define CFG_ENV_ADDR		0xbf040000
+#define CFG_ENV_ADDR		0xbf080000
 #define CFG_ENV_SIZE		0x10000
 
 #define CONFIG_BOOTCOMMAND "bootm 0xbf030000"
