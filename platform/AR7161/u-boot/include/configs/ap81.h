@@ -30,13 +30,13 @@
 
 #undef CONFIG_BOOTARGS
 /* XXX - putting rootfs in last partition results in jffs errors */
-#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:03 rootfstype=squashfs,jffs2 init=/sbin/init mtdparts=ar7100-nor0:128k(u-boot),64k(Config),1024k(vmlinux),6912k(rootfs),64k(ART)"
+#define	CONFIG_BOOTARGS     "console=ttyS0,115200 root=31:03 rootfstype=squashfs,jffs2 init=/sbin/init mtdparts=ar7100-nor0:128k(u-boot),64k(Config),1024k(vmlinux),6848k(rootfs),128k(ART)"
 
 #define BOOT_IMG_UPPER_BOUND	128 * 1024 //for upgrade bootloader in backup mode
 
 /* default mtd partition table */
 #undef MTDPARTS_DEFAULT
-#define MTDPARTS_DEFAULT    "mtdparts=ar7100-nor0:128k(u-boot),64k(Config),1024k(vmlinux),6912k(rootfs),64k(ART)"
+#define MTDPARTS_DEFAULT    "mtdparts=ar7100-nor0:128k(u-boot),64k(Config),1024k(vmlinux),6848k(rootfs),128k(ART)"
 
 #undef CFG_PLL_FREQ
 #define CFG_PLL_FREQ	CFG_PLL_400_400_100

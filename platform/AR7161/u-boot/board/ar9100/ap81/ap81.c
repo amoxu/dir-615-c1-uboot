@@ -156,7 +156,7 @@ long int initdram(int board_type)
 int checkboard (void)
 {
 
-    printf("AP81 (ar7100) U-boot\n");
+    printf("AP81 (ar9100) U-boot (build by Amo Xu<amo.xoo@live.cn>)\n");
 #ifdef DLINK_ROUTER_LED_DEFINE   
 	printf("DLINK_ROUTER_LED_DEFINE\n");    
     *(volatile int *)(0xb8040000) |=((1 << DIAGNOSTIC_LED) | (1<<14));//init       
