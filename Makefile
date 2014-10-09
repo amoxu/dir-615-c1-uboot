@@ -158,53 +158,23 @@ export WL_CFLAG := $(WL_CFLAG)
 all: loader
 
 
-ifeq ($(WL_PLATFORM), DB120)
-loader:
-	$(MAKE) -C platform redboot_build
-else
 loader:
 	$(MAKE) -C platform redboot_build AP_TYPE=$(AP_TYPE) ETH_SWITCH=$(ETH_SWITCH)
-endif
 
-loader_clean:
-	$(MAKE) -C platform redboot_clean AP_TYPE=$(AP_TYPE)
-
-
-install:
-	$(MAKE) -C platform install
-	@echo =================== Finish ===================
 
 clean:
 	$(MAKE) -C platform clean
 
 conf mconf:
 	$(MAKE) -C config
-	@./config/$@ ./config/Config
-
-appsconf:
-	$(MAKE) -C $(APPS_PATH) config
-
-appsmconf:
-	$(MAKE) -C $(APPS_PATH) menuconfig
-		
+	@./config/$@ ./config/Config		
 
 menuconfig: mconf
 
-# Default configurations
-.config:
-	cp config/defconfig $@
-	$(MAKE) mconf
-
-#
-### Generic rules
-#
 %:
 	[ ! -d $* ] || $(MAKE) -C $*
 
 %-clean:
 	[ ! -d $* ] || $(MAKE) -C $* clean
-
-%-install:
-	[ ! -d $* ] || $(MAKE) -C $* install || exit 1
 		
-.PHONY: all clean install
+.PHONY: all clean
